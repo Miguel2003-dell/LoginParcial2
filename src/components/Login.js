@@ -1,33 +1,51 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const history = useHistory();
+  const [error, setError] = useState('');
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    if (username === 'ingreyeslara' && password === 'Utd_2024') {
-      history.push('/alumnos');
+  const handleLogin = (event) => {
+    event.preventDefault(); // Evita que el formulario se envíe por defecto
+
+    // Validación básica del usuario y contraseña
+    if (username === "examen_parcial2" && password === "Voyporel100") {
+      navigate("/alumnos"); // Redirige a la ruta de alumnos si las credenciales son correctas
     } else {
-      alert('Credenciales incorrectas');
+      setError("Credenciales incorrectas");
     }
   };
 
   return (
-    <div>
-      <h2>Login</h2>
+    <div className="container">
+      <h2 className="mt-5">Login</h2>
+      {error && <div className="alert alert-danger">{error}</div>}
       <form onSubmit={handleLogin}>
-        <div>
-          <label>Usuario:</label>
-          <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
+        <div className="mb-3">
+          <label htmlFor="username" className="form-label">Username</label>
+          <input
+            type="text"
+            className="form-control"
+            id="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
         </div>
-        <div>
-          <label>Contraseña:</label>
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+        <div className="mb-3">
+          <label htmlFor="password" className="form-label">Password</label>
+          <input
+            type="password"
+            className="form-control"
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
         </div>
-        <button type="submit">Ingresar</button>
+        <button type="submit" className="btn btn-primary">Login</button>
       </form>
     </div>
   );
